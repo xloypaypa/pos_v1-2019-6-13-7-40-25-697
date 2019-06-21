@@ -6,7 +6,17 @@ function printReceipt(tags) {
     const originalPriceList = buildOriginalPriceList(itemCount, itemMap);
     const promotionsMap = getPromotionsMap();
     const realPriceList = buildRealPriceList(originalPriceList, promotionsMap);
-    console.log(realPriceList);
+    const totalDiscount = calculateTotalDiscount(realPriceList);
+    console.log(totalDiscount);
+}
+
+function calculateTotalDiscount(realPriceList) {
+    let result = 0;
+    for (let i = 0; i < realPriceList.length; i++) {
+        const realPrice = realPriceList[i];
+        result += realPrice.originalPrice - realPrice.realPrice;
+    }
+    return result;
 }
 
 function buildRealPriceList(originalPriceList, promotionsMap) {
