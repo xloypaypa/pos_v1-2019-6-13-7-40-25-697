@@ -4,7 +4,21 @@ function printReceipt(tags) {
     const itemMap = getAllItemMap();
     const itemCount = getItemCount(tags);
     const originalPriceList = buildOriginalPriceList(itemCount, itemMap);
-    console.log(buyTwoGetOneFreeDiscount(originalPriceList[0]));
+    const promotionsMap = getPromotionsMap();
+    console.log(promotionsMap);
+}
+
+function getPromotionsMap() {
+    const promotions = loadPromotions();
+    const result = {};
+    for (let i = 0; i < promotions.length; i++) {
+        for (let j = 0; j < promotions[i].barcodes.length; j++) {
+            if (promotions[i].type === 'BUY_TWO_GET_ONE_FREE') {
+                result[promotions[i].barcodes[j]] = buyTwoGetOneFreeDiscount;
+            }
+        }
+    }
+    return result;
 }
 
 function noDiscount(originalPrice) {
