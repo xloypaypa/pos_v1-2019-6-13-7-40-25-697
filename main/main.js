@@ -7,7 +7,11 @@ function printReceipt(tags) {
 }
 
 function convertTagToItemCountDelta(tag) {
-    return {key: tag, countDelta: 1};
+    if (tag.indexOf("-") !== -1) {
+        return {key: tag.split("-")[0], countDelta: parseFloat(tag.split("-")[1])};
+    } else {
+        return {key: tag, countDelta: 1};
+    }
 }
 
 function getItemCount(tags) {
