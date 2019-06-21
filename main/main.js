@@ -1,3 +1,15 @@
 'use strict';
 
-//TODO: 请在该文件中实现练习要求并删除此注释
+function printReceipt(tags) {
+    const itemMap = getAllItemMap();
+    console.log(itemMap)
+}
+
+function getAllItemMap() {
+    const itemList = loadAllItems();
+    const result = {};
+    for (let i = 0; i < itemList.length; i++) {
+        result[itemList[i].barcode] = itemList[i];
+    }
+    return result;
+}
