@@ -3,7 +3,15 @@
 function printReceipt(tags) {
     const itemMap = getAllItemMap();
     const itemCount = getItemCount(tags);
-    console.log(itemCount);
+    console.log(buildOriginalItemPriceList(itemCount, itemMap));
+}
+
+function buildOriginalItemPriceList(itemCount, itemMap) {
+    const result = [];
+    for (let i = 0; i < itemCount.length; i++) {
+        result.push({key: itemCount[i].key, itemDetail: itemMap[itemCount[i].key], originalPrice: itemCount[i].count * itemMap[itemCount[i].key].price})
+    }
+    return result;
 }
 
 function convertTagToItemCountDelta(tag) {
