@@ -7,7 +7,23 @@ function printReceipt(tags) {
     const promotionsMap = getPromotionsMap();
     const realPriceList = buildRealPriceList(originalPriceList, promotionsMap);
     const totalDiscount = calculateTotalDiscount(realPriceList);
-    console.log(totalDiscount);
+    showReceipt(realPriceList, totalDiscount);
+}
+
+function showReceipt(realPriceList, totalDiscount) {
+    let receipt = "***<没钱赚商店>收据***\n";
+    for (let i = 0; i < realPriceList.length; i++) {
+        const realPrice = realPriceList[i];
+        receipt += "名称：" + realPrice.itemDetail.name +
+            "，数量：" + realPrice.count + realPrice.itemDetail.unit + "，" +
+            "单价：" + realPrice.itemDetail.price + "(元)，" +
+            "小计：" + realPrice.realPrice +"(元)\n";
+    }
+    receipt+="----------------------\n";
+    receipt+="总计：(元)\n";
+    receipt+="节省：" + totalDiscount +"(元)\n";
+    receipt += "**********************";
+    console.log(receipt);
 }
 
 function calculateTotalDiscount(realPriceList) {
