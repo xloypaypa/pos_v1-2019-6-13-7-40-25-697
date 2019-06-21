@@ -10,18 +10,22 @@ function printReceipt(tags) {
     showReceipt(realPriceList, total);
 }
 
+function formatDecimal(decimal) {
+    return parseFloat(decimal).toFixed(2);
+}
+
 function showReceipt(realPriceList, total) {
     let receipt = "***<没钱赚商店>收据***\n";
     for (let i = 0; i < realPriceList.length; i++) {
         const realPrice = realPriceList[i];
         receipt += "名称：" + realPrice.itemDetail.name +
             "，数量：" + realPrice.count + realPrice.itemDetail.unit + "，" +
-            "单价：" + realPrice.itemDetail.price + "(元)，" +
-            "小计：" + realPrice.realPrice +"(元)\n";
+            "单价：" + formatDecimal(realPrice.itemDetail.price) + "(元)，" +
+            "小计：" + formatDecimal(realPrice.realPrice) +"(元)\n";
     }
     receipt+="----------------------\n";
-    receipt+="总计："+ total.totalPrice +"(元)\n";
-    receipt+="节省：" + total.discount +"(元)\n";
+    receipt+="总计："+ formatDecimal(total.totalPrice) +"(元)\n";
+    receipt+="节省：" + formatDecimal(total.discount) +"(元)\n";
     receipt += "**********************";
     console.log(receipt);
 }
