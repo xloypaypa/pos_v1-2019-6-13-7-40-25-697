@@ -4,7 +4,7 @@ function printReceipt(tags) {
     const itemMap = getAllItemMap();
     const itemCount = getItemCount(tags);
     const originalPriceList = buildOriginalPriceList(itemCount, itemMap);
-    console.log(noDiscount(originalPriceList[0]));
+    console.log(buyTwoGetOneFreeDiscount(originalPriceList[0]));
 }
 
 function noDiscount(originalPrice) {
@@ -13,10 +13,21 @@ function noDiscount(originalPrice) {
     return realPrice;
 }
 
+function buyTwoGetOneFreeDiscount(originalPrice) {
+    const realPrice = JSON.parse(JSON.stringify(originalPrice));
+    realPrice['realPrice'] = realPrice.originalPrice - parseInt(realPrice.count / 3) * realPrice.itemDetail.price;
+    return realPrice;
+}
+
 function buildOriginalPriceList(itemCount, itemMap) {
     const result = [];
     for (let i = 0; i < itemCount.length; i++) {
-        result.push({key: itemCount[i].key, itemDetail: itemMap[itemCount[i].key], originalPrice: itemCount[i].count * itemMap[itemCount[i].key].price})
+        result.push({
+            key: itemCount[i].key,
+            count: itemCount[i].count,
+            itemDetail: itemMap[itemCount[i].key],
+            originalPrice: itemCount[i].count * itemMap[itemCount[i].key].price
+        })
     }
     return result;
 }
