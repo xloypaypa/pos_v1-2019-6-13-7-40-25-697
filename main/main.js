@@ -6,11 +6,11 @@ function printReceipt(tags) {
     const originalPriceList = buildOriginalPriceList(itemCount, itemMap);
     const promotionsMap = getPromotionsMap();
     const realPriceList = buildRealPriceList(originalPriceList, promotionsMap);
-    const totalDiscount = calculateTotalDiscount(realPriceList);
-    showReceipt(realPriceList, totalDiscount);
+    const total = calculateTotalPriceAndDiscount(realPriceList);
+    showReceipt(realPriceList, total);
 }
 
-function showReceipt(realPriceList, totalDiscount) {
+function showReceipt(realPriceList, total) {
     let receipt = "***<没钱赚商店>收据***\n";
     for (let i = 0; i < realPriceList.length; i++) {
         const realPrice = realPriceList[i];
@@ -20,19 +20,21 @@ function showReceipt(realPriceList, totalDiscount) {
             "小计：" + realPrice.realPrice +"(元)\n";
     }
     receipt+="----------------------\n";
-    receipt+="总计：(元)\n";
-    receipt+="节省：" + totalDiscount +"(元)\n";
+    receipt+="总计："+ total.totalPrice +"(元)\n";
+    receipt+="节省：" + total.discount +"(元)\n";
     receipt += "**********************";
     console.log(receipt);
 }
 
-function calculateTotalDiscount(realPriceList) {
-    let result = 0;
+function calculateTotalPriceAndDiscount(realPriceList) {
+    let discount = 0;
+    let totalPrice = 0;
     for (let i = 0; i < realPriceList.length; i++) {
         const realPrice = realPriceList[i];
-        result += realPrice.originalPrice - realPrice.realPrice;
+        discount += realPrice.originalPrice - realPrice.realPrice;
+        totalPrice += realPrice.realPrice;
     }
-    return result;
+    return {totalPrice: totalPrice, discount: discount};
 }
 
 function buildRealPriceList(originalPriceList, promotionsMap) {
