@@ -9,9 +9,10 @@ function printReceipt(tags) {
 function getItemCount(tags) {
     const result = [];
     for (let i = 0; i < tags.length; i++) {
+        const item = tags[i];
         let exist = false;
         for (let j = 0; j < result.length; j++) {
-            if (result[j].key === tags[i]) {
+            if (result[j].key === item) {
                 result[j].count++;
                 exist = true;
                 break;
