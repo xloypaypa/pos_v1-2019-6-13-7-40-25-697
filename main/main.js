@@ -10,16 +10,17 @@ function getItemCount(tags) {
     const result = [];
     for (let i = 0; i < tags.length; i++) {
         const item = tags[i];
+        const countDelta = 1;
         let exist = false;
         for (let j = 0; j < result.length; j++) {
             if (result[j].key === item) {
-                result[j].count++;
+                result[j].count += countDelta;
                 exist = true;
                 break;
             }
         }
         if (!exist) {
-            result.push({key: tags[i], count: 1});
+            result.push({key: tags[i], count: countDelta});
         }
     }
     return result;
