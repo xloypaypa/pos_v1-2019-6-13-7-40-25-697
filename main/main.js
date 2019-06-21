@@ -6,21 +6,24 @@ function printReceipt(tags) {
     console.log(itemCount);
 }
 
+function convertTagToItemCountDelta(tag) {
+    return {key: tag, countDelta: 1};
+}
+
 function getItemCount(tags) {
     const result = [];
     for (let i = 0; i < tags.length; i++) {
-        const item = tags[i];
-        const countDelta = 1;
+        const item = convertTagToItemCountDelta(tags[i]);
         let exist = false;
         for (let j = 0; j < result.length; j++) {
-            if (result[j].key === item) {
-                result[j].count += countDelta;
+            if (result[j].key === item.key) {
+                result[j].count += item.countDelta;
                 exist = true;
                 break;
             }
         }
         if (!exist) {
-            result.push({key: tags[i], count: countDelta});
+            result.push({key: item.key, count: item.countDelta});
         }
     }
     return result;
