@@ -5,7 +5,18 @@ function printReceipt(tags) {
     const itemCount = getItemCount(tags);
     const originalPriceList = buildOriginalPriceList(itemCount, itemMap);
     const promotionsMap = getPromotionsMap();
-    console.log(promotionsMap);
+    const realPriceList = buildRealPriceList(originalPriceList, promotionsMap);
+    console.log(realPriceList);
+}
+
+function buildRealPriceList(originalPriceList, promotionsMap) {
+    const result = [];
+    for (let i = 0; i < originalPriceList.length; i++) {
+        const originalPrice = originalPriceList[i];
+        const discountFunction = promotionsMap[originalPrice.key] || noDiscount;
+        result.push(discountFunction(originalPrice));
+    }
+    return result;
 }
 
 function getPromotionsMap() {
